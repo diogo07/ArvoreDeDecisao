@@ -4,7 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
+import model.Arvore;
 import model.DataSet;
 import model.DivisorBase;
 import model.ProcessadorArquivo;
@@ -42,11 +44,26 @@ public class ControllerTelaPrincipal implements ActionListener{
 					return;
 				}
 	            
+	            //System.out.println(dataSet.getRegistros());
+	            
+	            Collections.shuffle(dataSet.getRegistros());
+	            
+	            
 	            this.telaPrincipal.getLblQtdRegistos().setText("Total de Instâncias: "+dataSet.size());
 	            
 	            ArrayList<String []> lista = dataSet.getQuantidadeInstanciasPorClasse();
 	           
 	            this.telaPrincipal.exibirClasses(lista);
+	            
+	            String atributoClasse = dataSet.getRegistroAt(0).getAtributos().get(dataSet.getRegistroAt(0).getAtributos().size()-1);
+	            
+	           dataSet.setAtributoDeClasse(atributoClasse);
+	            
+	           Arvore arvore = new Arvore();
+	           arvore.construir(dataSet);
+	           
+	           System.out.println(arvore);
+	            
 			}
             
 		}
@@ -55,8 +72,11 @@ public class ControllerTelaPrincipal implements ActionListener{
 			if(dataSet != null) {
 				if(this.telaPrincipal.validarCampoDivisaoBase()) {
 					DivisorBase d = new DivisorBase(dataSet, Integer.parseInt(this.telaPrincipal.getTextPorcentagem().getText()));
-					int numeroInstanciasTreino = d.separar();
-					this.telaPrincipal.exibirMensagemSucesso("Serão usadas "+numeroInstanciasTreino+" instâncias para treino!");
+					d.separar();
+					System.out.println(dataSet);
+					System.out.println(d.baseTreino());
+					System.out.println(d.baseTeste());
+					//this.telaPrincipal.exibirMensagemSucesso("Serão usadas "+numeroInstanciasTreino+" instâncias para treino!");
 				}else {
 					this.telaPrincipal.exibirMensagemErro("Campo de divisão da base não preenchido!");
 				}
