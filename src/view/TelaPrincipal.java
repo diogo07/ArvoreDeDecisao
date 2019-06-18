@@ -5,21 +5,20 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.io.File;
-import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import model.DataSet;
-import model.ProcessadorArquivo;
-
+import javax.swing.text.MaskFormatter;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class TelaPrincipal extends JFrame {
 	
@@ -29,6 +28,8 @@ public class TelaPrincipal extends JFrame {
 	private JPanel panelDataset;
 	private JLabel lblQtdRegistos;
 	private ArrayList<JLabel> classes;
+	private JFormattedTextField textPorcentagem;
+	private JButton btnIniciar;
 	
 	public TelaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,6 +77,42 @@ public class TelaPrincipal extends JFrame {
 		
 		scrollPane.add(panelDataset);
 		
+		JPanel panelDivisaoBase = new JPanel();
+		panelDivisaoBase.setBorder(new TitledBorder(null, "Divis\u00E3o da Base", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelDivisaoBase.setBounds(31, 322, 712, 71);
+		getContentPane().add(panelDivisaoBase);
+		panelDivisaoBase.setLayout(null);
+		
+		JLabel lblTxtDivisao = new JLabel("Parte de Treino:");
+		lblTxtDivisao.setBounds(10, 34, 94, 14);
+		panelDivisaoBase.add(lblTxtDivisao);
+		
+		MaskFormatter fmt = null;
+		try {
+			fmt = new MaskFormatter("##");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		 
+		textPorcentagem = new JFormattedTextField(fmt);
+		textPorcentagem.setBounds(118, 31, 205, 20);
+		panelDivisaoBase.add(textPorcentagem);
+		textPorcentagem.setColumns(10);
+		
+		btnIniciar = new JButton("Iniciar");
+		btnIniciar.setBounds(350, 30, 89, 23);
+		panelDivisaoBase.add(btnIniciar);
+		
+		JPanel panelResultado = new JPanel();
+		panelResultado.setBorder(new TitledBorder(null, "Resultado", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelResultado.setBounds(31, 404, 712, 113);
+		getContentPane().add(panelResultado);
+		panelResultado.setLayout(null);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(10, 21, 692, 81);
+		panelResultado.add(textArea);
+		
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
@@ -94,7 +131,7 @@ public class TelaPrincipal extends JFrame {
 	}
 
 
-	public void abrirSelecionadorDeArquivo() {
+	public String abrirSelecionadorDeArquivo() {
         JFileChooser jFileChooser = new JFileChooser();
         jFileChooser.setFileFilter(new FileNameExtensionFilter("TXT", "txt"));
         jFileChooser.setAcceptAllFileFilterUsed(false);
@@ -104,34 +141,18 @@ public class TelaPrincipal extends JFrame {
 	     
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jFileChooser.getSelectedFile();
-            ProcessadorArquivo processadorArquivo = new ProcessadorArquivo();
-            processadorArquivo.setArquivo(trocarBarras(selectedFile.getAbsolutePath()));
-            
-            DataSet dataSet = null;
-            
-            try {
-				dataSet = processadorArquivo.getRegistros();
-				textField.setText(trocarBarras(selectedFile.getAbsolutePath()));
-	            
-			} catch (IOException e) {
-				JOptionPane.showMessageDialog(this, "Arquivo incompatível!", "Erro", 0);
-				return;
-			}
-            
-            lblQtdRegistos.setText("Total de Instâncias: "+dataSet.size());
-            
-            ArrayList<String []> l = dataSet.getQuantidadeInstanciasPorClasse();
-           
-            for(int i = 0; i <l.size(); i++) {
-            	classes.get(i).setText(l.get(i)[0]+" : "+l.get(i)[1]);
-            	classes.get(i).setVisible(true);
-            }
-
+            return trocarBarras(selectedFile.getAbsolutePath());
+        }else {
+        	return null;
         }
+        
 	}
 	
-	public void exibirClasses(DataSet dataSet) {
-		
+	public void exibirClasses(ArrayList<String []> l) {
+		for(int i = 0; i <l.size(); i++) {
+        	classes.get(i).setText(l.get(i)[0]+" : "+l.get(i)[1]);
+        	classes.get(i).setVisible(true);
+        }
 	}
 	
 	public String trocarBarras(String texto) {
@@ -149,7 +170,28 @@ public class TelaPrincipal extends JFrame {
 
 		return end;
 	}
+	
+	
+	public void exibirMensagemErro(String mensagem) {
+		JOptionPane.showMessageDialog(this, mensagem, "Erro", 0);
+	}
 
+	public void exibirMensagemSucesso(String mensagem) {
+		JOptionPane.showMessageDialog(this, mensagem, "", 1);
+	}
+	
+	public boolean validarCampoDivisaoBase() {
+		if(textPorcentagem.getText().length() > 0) {
+			try {
+				Integer.parseInt(textPorcentagem.getText());
+				return true;
+			}catch (Exception e) {
+				return false;
+			}
+		}else {
+			return false;
+		}
+	}
 
 	public JButton getBtnBuscar() {
 		return btnBuscar;
@@ -159,4 +201,66 @@ public class TelaPrincipal extends JFrame {
 	public void setBtnBuscar(JButton btnBuscar) {
 		this.btnBuscar = btnBuscar;
 	}
+
+
+	public JTextField getTextField() {
+		return textField;
+	}
+
+
+	public void setTextField(JTextField textField) {
+		this.textField = textField;
+	}
+
+
+	public JPanel getPanelDataset() {
+		return panelDataset;
+	}
+
+
+	public void setPanelDataset(JPanel panelDataset) {
+		this.panelDataset = panelDataset;
+	}
+
+
+	public JLabel getLblQtdRegistos() {
+		return lblQtdRegistos;
+	}
+
+
+	public void setLblQtdRegistos(JLabel lblQtdRegistos) {
+		this.lblQtdRegistos = lblQtdRegistos;
+	}
+
+
+	public ArrayList<JLabel> getClasses() {
+		return classes;
+	}
+
+
+	public void setClasses(ArrayList<JLabel> classes) {
+		this.classes = classes;
+	}
+
+
+	public JFormattedTextField getTextPorcentagem() {
+		return textPorcentagem;
+	}
+
+
+	public void setTextPorcentagem(JFormattedTextField textPorcentagem) {
+		this.textPorcentagem = textPorcentagem;
+	}
+
+
+	public JButton getBtnIniciar() {
+		return btnIniciar;
+	}
+
+
+	public void setBtnIniciar(JButton btnIniciar) {
+		this.btnIniciar = btnIniciar;
+	}
+	
+	
 }
