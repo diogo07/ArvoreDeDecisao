@@ -141,4 +141,32 @@ public class DataSet {
 		return msg;
 	}
 	
+	
+	public ArrayList<String []> getQuantidadeInstanciasPorClasse() {
+		ArrayList<String []> classes = new ArrayList<>();
+		
+		for(Instancia registo:registros) {
+			int indiceResultado = classeEstaNaLista(classes, registo.getValores().get(registo.getValores().size()-1));
+			if(indiceResultado>=0) {
+				classes.get(indiceResultado)[1] = (Integer.parseInt(classes.get(indiceResultado)[1])+1)+"";
+			}else {
+				String classe [] = new String [2];
+				classe[0] = registo.getValores().get(registo.getValores().size()-1);
+				classe[1] = "1";
+				classes.add(classe);
+			}
+		}		
+		return classes;
+	}
+	
+	private int classeEstaNaLista(List<String []> classes, String classe) {
+		for(int i = 0; i < classes.size(); i++) {
+			if(classes.get(i)[0].equals(classe)) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+	
 }
