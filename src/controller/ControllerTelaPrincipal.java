@@ -9,6 +9,7 @@ import java.util.Collections;
 import model.Arvore;
 import model.DataSet;
 import model.DivisorBase;
+import model.Instancia;
 import model.ProcessadorArquivo;
 import view.TelaPrincipal;
 
@@ -16,6 +17,7 @@ public class ControllerTelaPrincipal implements ActionListener{
 
 	private TelaPrincipal telaPrincipal;
 	private DataSet dataSet;
+	private Arvore arvore;
 		
 	public ControllerTelaPrincipal(TelaPrincipal telaPrincipal) {
 		this.telaPrincipal = telaPrincipal;
@@ -59,10 +61,10 @@ public class ControllerTelaPrincipal implements ActionListener{
 	            
 	           dataSet.setAtributoDeClasse(atributoClasse);
 	            
-	           Arvore arvore = new Arvore();
-	           arvore.construir(dataSet);
+	           //arvore = new Arvore();
+	           //arvore.construir(dataSet);
 	           
-	           System.out.println(arvore);
+	           //System.out.println(arvore);
 	            
 			}
             
@@ -71,11 +73,18 @@ public class ControllerTelaPrincipal implements ActionListener{
 		if(e.getSource() == this.telaPrincipal.getBtnIniciar()) {
 			if(dataSet != null) {
 				if(this.telaPrincipal.validarCampoDivisaoBase()) {
-					DivisorBase d = new DivisorBase(dataSet, Integer.parseInt(this.telaPrincipal.getTextPorcentagem().getText()));
-					d.separar();
-					System.out.println(dataSet);
-					System.out.println(d.baseTreino());
-					System.out.println(d.baseTeste());
+					DivisorBase divisor = new DivisorBase(dataSet, Integer.parseInt(this.telaPrincipal.getTextPorcentagem().getText()));
+					divisor.separar();
+					
+					arvore = new Arvore();
+			        arvore.construir(divisor.baseTreino());
+			           
+					
+					for(Instancia instancia: divisor.baseTeste().getRegistros()) {
+						System.out.println("Valor real: "+instancia.getValor(instancia.getAtributos().get(instancia.getSize()-1)));
+						//instancia.getAtributos().remove(instancia.getSize()-1);
+						System.out.println("Classificação: "+arvore.predict(instancia)+"\n");
+					}
 					//this.telaPrincipal.exibirMensagemSucesso("Serão usadas "+numeroInstanciasTreino+" instâncias para treino!");
 				}else {
 					this.telaPrincipal.exibirMensagemErro("Campo de divisão da base não preenchido!");
