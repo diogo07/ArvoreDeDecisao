@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import model.Acuracia;
 import model.Arvore;
 import model.DataSet;
 import model.DivisorBase;
@@ -46,11 +47,7 @@ public class ControllerTelaPrincipal implements ActionListener{
 					return;
 				}
 	            
-	            //System.out.println(dataSet.getRegistros());
-	            
-	            Collections.shuffle(dataSet.getRegistros());
-	            
-	            
+	            Collections.shuffle(dataSet.getRegistros());            
 	            this.telaPrincipal.getLblQtdRegistos().setText("Total de Instâncias: "+dataSet.size());
 	            
 	            ArrayList<String []> lista = dataSet.getQuantidadeInstanciasPorClasse();
@@ -59,12 +56,7 @@ public class ControllerTelaPrincipal implements ActionListener{
 	            
 	            String atributoClasse = dataSet.getRegistroAt(0).getAtributos().get(dataSet.getRegistroAt(0).getAtributos().size()-1);
 	            
-	           dataSet.setAtributoDeClasse(atributoClasse);
-	            
-	           //arvore = new Arvore();
-	           //arvore.construir(dataSet);
-	           
-	           //System.out.println(arvore);
+	            dataSet.setAtributoDeClasse(atributoClasse);
 	            
 			}
             
@@ -74,18 +66,19 @@ public class ControllerTelaPrincipal implements ActionListener{
 			if(dataSet != null) {
 				if(this.telaPrincipal.validarCampoDivisaoBase()) {
 					DivisorBase divisor = new DivisorBase(dataSet, Integer.parseInt(this.telaPrincipal.getTextPorcentagem().getText()));
+					//  Separa a base em Treinamento e teste
 					divisor.separar();
-					
+					//	Instancia e constroi a árvore
 					arvore = new Arvore();
 			        arvore.construir(divisor.baseTreino());
-			           
+					DataSet baseTeste = divisor.baseTeste();
 					
-					for(Instancia instancia: divisor.baseTeste().getRegistros()) {
-						System.out.println("Valor real: "+instancia.getValor(instancia.getAtributos().get(instancia.getSize()-1)));
-						//instancia.getAtributos().remove(instancia.getSize()-1);
-						System.out.println("Classificação: "+arvore.predict(instancia)+"\n");
-					}
-					//this.telaPrincipal.exibirMensagemSucesso("Serão usadas "+numeroInstanciasTreino+" instâncias para treino!");
+					// Realiza a predição e calcula a frequência de acertos
+					double acuracia = Acuracia.calcular(baseTeste, arvore);
+					
+					
+					//  Exibe o resultado da acurácia
+					this.telaPrincipal.exibirMensagemSucesso("Acurácia: " + String.format("%.2f", acuracia)+"%");
 				}else {
 					this.telaPrincipal.exibirMensagemErro("Campo de divisão da base não preenchido!");
 				}

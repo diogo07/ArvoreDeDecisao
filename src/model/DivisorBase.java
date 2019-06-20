@@ -7,7 +7,6 @@ public class DivisorBase {
 	private DataSet dataSetTeste;
 	private int porcentagemTreinamento;
 	private int registrosTreino;
-	private int registrosTeste;
 	
 	
 	
@@ -18,7 +17,6 @@ public class DivisorBase {
 	
 	public void separar() {
 		registrosTreino = (int) (dataSet.size()*(porcentagemTreinamento*0.01));
-		registrosTeste = dataSet.size()-registrosTreino;
 	}
 	
 	public DataSet baseTreino() {

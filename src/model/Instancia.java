@@ -28,6 +28,7 @@ public class Instancia {
 		return lista.size();
 	}
 	
+	
 	public String getValor(String atributo) {
 		return lista.get(atributo);
 	}
