@@ -10,7 +10,6 @@ import model.Acuracia;
 import model.Arvore;
 import model.DataSet;
 import model.DivisorBase;
-import model.Instancia;
 import model.ProcessadorArquivo;
 import view.TelaPrincipal;
 
@@ -51,7 +50,7 @@ public class ControllerTelaPrincipal implements ActionListener{
 	            this.telaPrincipal.getLblQtdRegistos().setText("Total de Instâncias: "+dataSet.size());
 	            
 	            ArrayList<String []> lista = dataSet.getQuantidadeInstanciasPorClasse();
-	           
+	            this.telaPrincipal.reiniciarPanelDataSet();
 	            this.telaPrincipal.exibirClasses(lista);
 	            
 	            String atributoClasse = dataSet.getRegistroAt(0).getAtributos().get(dataSet.getRegistroAt(0).getAtributos().size()-1);
@@ -74,11 +73,11 @@ public class ControllerTelaPrincipal implements ActionListener{
 					DataSet baseTeste = divisor.baseTeste();
 					
 					// Realiza a predição e calcula a frequência de acertos
-					double acuracia = Acuracia.calcular(baseTeste, arvore);
+					double resultado [] = Acuracia.calcular(baseTeste, arvore);
 					
 					
-					//  Exibe o resultado da acurácia
-					this.telaPrincipal.exibirMensagemSucesso("Acurácia: " + String.format("%.2f", acuracia)+"%");
+					//  Exibe os acertos, erros e o resultado da acurácia
+					this.telaPrincipal.getTextAreaResultado().setText("Acertos: "+ String.format("%.0f", resultado[0])+"\nErros: "+ String.format("%.0f", resultado[1])+"\nAcurácia: " + String.format("%.2f", resultado[2])+"%");
 				}else {
 					this.telaPrincipal.exibirMensagemErro("Campo de divisão da base não preenchido!");
 				}

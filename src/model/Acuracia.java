@@ -3,7 +3,8 @@ package model;
 public class Acuracia {
 	
 	
-	public static double calcular(DataSet dataset, Arvore arvore) {
+	public static double [] calcular(DataSet dataset, Arvore arvore) {
+			
 		int acertos = 0;
 		int erros = 0;
 		int indiceArrayClasse = dataset.getRegistroAt(0).getValores().size() - 1;
@@ -16,12 +17,10 @@ public class Acuracia {
 			}
 		}
 		
-		System.out.println("Acertos: "+acertos);
-		System.out.println("Erros: "+erros);
-		
 		double acuracia =  (double)(acertos) / (double)(dataset.size());
+		double resultado [] = {acertos, erros, acuracia*100};
 		
-		return acuracia*100;
+		return resultado;
 	}
 
 }

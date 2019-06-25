@@ -30,6 +30,7 @@ public class TelaPrincipal extends JFrame {
 	private ArrayList<JLabel> classes;
 	private JFormattedTextField textPorcentagem;
 	private JButton btnIniciar;
+	private JTextArea textAreaResultado;
 	
 	public TelaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -109,9 +110,9 @@ public class TelaPrincipal extends JFrame {
 		getContentPane().add(panelResultado);
 		panelResultado.setLayout(null);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(10, 21, 692, 81);
-		panelResultado.add(textArea);
+		textAreaResultado = new JTextArea();
+		textAreaResultado.setBounds(10, 21, 692, 81);
+		panelResultado.add(textAreaResultado);
 		
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -128,6 +129,13 @@ public class TelaPrincipal extends JFrame {
         	classes.add(lbl);
 		}
 		
+	}
+	
+	public void reiniciarPanelDataSet() {
+		for(int i = 0; i <classes.size(); i++) {
+        	classes.get(i).setText("");
+        	classes.get(i).setVisible(false);
+        }
 	}
 
 
@@ -260,6 +268,16 @@ public class TelaPrincipal extends JFrame {
 
 	public void setBtnIniciar(JButton btnIniciar) {
 		this.btnIniciar = btnIniciar;
+	}
+
+
+	public JTextArea getTextAreaResultado() {
+		return textAreaResultado;
+	}
+
+
+	public void setTextAreaResultado(JTextArea textAreaResultado) {
+		this.textAreaResultado = textAreaResultado;
 	}
 	
 	
