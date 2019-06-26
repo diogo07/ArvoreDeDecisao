@@ -8,8 +8,10 @@ import java.util.Collections;
 
 import model.Acuracia;
 import model.Arvore;
+import model.Atributo;
 import model.DataSet;
 import model.DivisorBase;
+import model.Instancia;
 import model.ProcessadorArquivo;
 import view.TelaPrincipal;
 
@@ -22,7 +24,7 @@ public class ControllerTelaPrincipal implements ActionListener{
 	public ControllerTelaPrincipal(TelaPrincipal telaPrincipal) {
 		this.telaPrincipal = telaPrincipal;
 		this.telaPrincipal.getBtnBuscar().addActionListener(this);
-//		this.telaPrincipal.getBtnIniciar().addActionListener(this);
+		this.telaPrincipal.getBtnTestar().addActionListener(this);
 	}
 
 
@@ -45,13 +47,20 @@ public class ControllerTelaPrincipal implements ActionListener{
 					this.telaPrincipal.exibirMensagemErro("Arquivo incompatível!");
 					return;
 				}
-	            
-	           // System.out.println(dataSet);
-	            
+	            	            
 	            Collections.shuffle(dataSet.getRegistros());            
 //	            this.telaPrincipal.getLblQtdRegistos().setText("Total de Instâncias: "+dataSet.size());
 	            
 	            ArrayList<String []> lista = dataSet.getQuantidadeInstanciasPorClasse();
+	            
+	            ArrayList<Atributo> atributos = dataSet.getAtributos();
+	            
+	            for(int i = 0; i < atributos.size(); i++) {
+	            	this.telaPrincipal.exibirAtributos(atributos.get(i).getNome());
+	            	this.telaPrincipal.exibirComboAtributos(atributos.get(i).getValores());
+	            	this.telaPrincipal.repaint();
+	            }
+	            
 	            this.telaPrincipal.reiniciarPanelDataSet();
 	            this.telaPrincipal.exibirClasses(lista);
 	            
@@ -62,35 +71,26 @@ public class ControllerTelaPrincipal implements ActionListener{
             
 		}
 		
-//		if(e.getSource() == this.telaPrincipal.getBtnIniciar()) {
-//			if(dataSet != null) {
-//				if(this.telaPrincipal.validarCampoDivisaoBase()) {
-//					DivisorBase divisor = new DivisorBase(dataSet, Integer.parseInt(this.telaPrincipal.getTextPorcentagem().getText()));
-//					//  Separa a base em Treinamento e teste
-//					divisor.separar();
-//					//	Instancia e constroi a árvore
-//					arvore = new Arvore();
-//			        arvore.construir(divisor.baseTreino());
-//					DataSet baseTeste = divisor.baseTeste();
-//					
-//					double resultado [] = null;
-//					
-//					// Realiza a predição e calcula a frequência de acertos
-//					try {
-//						resultado  = Acuracia.calcular(baseTeste, arvore);
-//					//  Exibe os acertos, erros e o resultado da acurácia
-//						this.telaPrincipal.getTextAreaResultado().setText("Acertos: "+ String.format("%.0f", resultado[0])+"\nErros: "+ String.format("%.0f", resultado[1])+"\nAcurácia: " + String.format("%.2f", resultado[2])+"%");
-//					}catch (NullPointerException except) {
-//						this.telaPrincipal.exibirMensagemErro("A árvore não conseguiu classificar a base de teste!");
-//					}					
-//					
-//				}else {
-//					this.telaPrincipal.exibirMensagemErro("Campo de divisão da base não preenchido!");
-//				}
-//			}else {
-//				this.telaPrincipal.exibirMensagemErro("Nenhuma base foi selecionada!");
-//			}
-//		}
+		if(e.getSource() == this.telaPrincipal.getBtnTestar()) {
+			if(dataSet != null) {
+				
+				//	Instancia e constroi a árvore
+				arvore = new Arvore();
+			    arvore.construir(dataSet);
+							    
+			    Instancia instanciaTeste = new Instancia();
+			    
+			    for(int i = 0; i < this.telaPrincipal.getAtributos().size() - 1; i++) {
+			    	instanciaTeste.add(this.telaPrincipal.getAtributo(i), this.telaPrincipal.getValorSelecionadoComboBox(i));
+			    }
+			    
+			    this.telaPrincipal.getTextAreaResultado().setText(this.telaPrincipal.getAtributo(this.telaPrincipal.getAtributos().size() - 1)+": "+ arvore.predict(instanciaTeste));			    
+			    
+				
+			}else {
+				this.telaPrincipal.exibirMensagemErro("Nenhuma base foi selecionada!");
+			}
+		}
 	}
 
 }

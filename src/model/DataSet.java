@@ -171,4 +171,51 @@ public class DataSet {
 		return -1;
 	}
 	
+	public ArrayList<Atributo> getAtributos() {
+		ArrayList<Atributo> atributos = new ArrayList<>();
+		List<String> nomeAtributos = registros.get(0).getAtributos();
+				
+		for(Instancia registo:registros) {
+			for (String nomeAtributo: nomeAtributos) {
+				
+				int indice = atributoEstaNaLista(atributos, nomeAtributo);
+				
+				if(indice < 0) {
+					atributos.add(new Atributo(nomeAtributo));
+					atributos.get(atributos.size()-1).getValores().add(registo.getValor(atributos.get(atributos.size()-1).getNome()));
+				}else {
+					ArrayList<String> valores = atributos.get(indice).getValores();
+					String valor = registo.getValor(atributos.get(indice).getNome());
+					
+					if(!valorEstaNaLista(valores, valor)){
+						atributos.get(indice).getValores().add(valor);
+					}
+				}			
+			}
+		}	
+		
+		return atributos;
+	}
+	
+	private boolean valorEstaNaLista(ArrayList<String> valores, String valor) {
+		for(String v: valores) {
+			if(v.equals(valor)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	
+	private int atributoEstaNaLista(ArrayList<Atributo> atributos, String nomeAtributo) {
+		for(int i = 0; i < atributos.size(); i++) {
+			if(atributos.get(i).getNome().equals(nomeAtributo)) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+	
 }

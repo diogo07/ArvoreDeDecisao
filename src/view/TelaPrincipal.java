@@ -6,17 +6,15 @@ import javax.swing.JPanel;
 
 import java.awt.GridLayout;
 import java.io.File;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.JFormattedTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.MaskFormatter;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -27,6 +25,8 @@ public class TelaPrincipal extends JFrame {
 	private JTextField textField;
 	private JButton btnBuscar;
 	private ArrayList<JLabel> classes;
+	private ArrayList<JLabel> atributos;
+	private ArrayList<JComboBox<String>> comboAtributos;
 	private JTextArea textAreaResultado;
 	private JPanel panelClasses;
 	private JPanel panelTeste;
@@ -59,15 +59,6 @@ public class TelaPrincipal extends JFrame {
 		lblAjuda.setBounds(10, 58, 210, 14);
 		panelBuscaBase.add(lblAjuda);
 		
-		
-		
-		MaskFormatter fmt = null;
-		try {
-			fmt = new MaskFormatter("##");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
 		panelClasses = new JPanel();
 		panelClasses.setBorder(new TitledBorder(null, "Classes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelClasses.setBounds(0, 0, 514, 339);
@@ -93,9 +84,9 @@ public class TelaPrincipal extends JFrame {
 		
 		panelTeste = new JPanel();
 		panelTeste.setBorder(new TitledBorder(null, "Teste", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelTeste.setBounds(0, 0, 513, 230);
+		panelTeste.setBounds(0, 30, 513, 230);
 		
-		panelTeste.setLayout(new GridLayout(0, 1, 10, 10));
+		panelTeste.setLayout(new GridLayout(0, 2, 5, 5));
 		
 		JScrollPane scrollPaneTeste = new JScrollPane(panelTeste);
 		scrollPaneTeste.setBounds(568, 23, 513, 230);
@@ -106,6 +97,8 @@ public class TelaPrincipal extends JFrame {
 		btnTestar.setBounds(780, 270, 89, 23);
 		getContentPane().add(btnTestar);
 		
+		criarLabelsAtributos();
+		
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
@@ -115,7 +108,6 @@ public class TelaPrincipal extends JFrame {
 		classes = new ArrayList<>();
 		for(int i = 0; i < 20; i++) {
 			JLabel lbl = new JLabel("");
-        	lbl.setBounds(30, (i*30)+60, 200, 30);
         	lbl.setVisible(false);
         	panelClasses.add(lbl);
         	classes.add(lbl);
@@ -123,14 +115,45 @@ public class TelaPrincipal extends JFrame {
 		
 	}
 	
+	private void criarLabelsAtributos() {
+		atributos = new ArrayList<>();
+		comboAtributos = new ArrayList<>();
+//		
+//		
+//		for(int i = 0; i < 10; i++) {
+//			
+//			JLabel lbl = new JLabel("");
+//			lbl.setVisible(false);
+//		    panelTeste.add(lbl);
+//		    atributos.add(lbl);
+//		    
+//		    JLabel lbl1 = new JLabel("");
+//		    lbl1.setVisible(false);
+//		    panelTeste.add(lbl1);
+//		    atributos.add(lbl1);
+//		    
+//		    JComboBox<String> combo = new JComboBox<>();
+//		    combo.setVisible(false);
+//		    panelTeste.add(combo);
+//		    comboAtributos.add(combo);
+//		    
+//		    JComboBox<String> combo1 = new JComboBox<>();
+//		    combo1.setVisible(false);
+//		    panelTeste.add(combo1);
+//		    comboAtributos.add(combo1);
+//		
+//		}		
+	}
+
+	
 	public void reiniciarPanelDataSet() {
 		for(int i = 0; i <classes.size(); i++) {
         	classes.get(i).setText("");
         	classes.get(i).setVisible(false);
         }
 	}
-
-
+	
+	
 	public String abrirSelecionadorDeArquivo() {
         JFileChooser jFileChooser = new JFileChooser();
         jFileChooser.setFileFilter(new FileNameExtensionFilter("TXT", "txt"));
@@ -154,6 +177,39 @@ public class TelaPrincipal extends JFrame {
         	classes.get(i).setVisible(true);
         }
 	}
+	
+	public void exibirAtributos(String atr) {		
+        JLabel atributo = new JLabel(atr+": ");
+		atributos.add(atributo);
+		panelTeste.add(atributo);
+        panelTeste.repaint();
+        panelTeste.validate();
+        panelTeste.revalidate();
+        
+	}
+	
+	public void exibirComboAtributos(ArrayList<String> valores) {
+		JComboBox<String> combo = new JComboBox<>();
+		for(String valor: valores) {
+			combo.addItem(valor);
+		}
+		comboAtributos.add(combo); 
+		panelTeste.add(combo);
+		panelTeste.repaint();
+        panelTeste.validate();
+        panelTeste.revalidate();
+        
+	}
+	
+	
+	public String getAtributo(int indice) {
+		return atributos.get(indice).getText().replace(": ", "");
+	}
+	
+	public String getValorSelecionadoComboBox(int indice) {
+		return comboAtributos.get(indice).getSelectedItem().toString();
+	}
+	
 	
 	public String trocarBarras(String texto) {
 		String end = "";
@@ -271,6 +327,17 @@ public class TelaPrincipal extends JFrame {
 	public void setBtnTestar(JButton btnTestar) {
 		this.btnTestar = btnTestar;
 	}
+
+
+	public ArrayList<JLabel> getAtributos() {
+		return atributos;
+	}
+
+
+	public void setAtributos(ArrayList<JLabel> atributos) {
+		this.atributos = atributos;
+	}
+	
 	
 	
 }
