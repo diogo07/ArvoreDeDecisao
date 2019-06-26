@@ -25,68 +25,36 @@ public class TelaPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JButton btnBuscar;
-	private JPanel panelDataset;
-	private JLabel lblQtdRegistos;
 	private ArrayList<JLabel> classes;
-	private JFormattedTextField textPorcentagem;
-	private JButton btnIniciar;
 	private JTextArea textAreaResultado;
 	
 	public TelaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 783, 566);
+		setBounds(100, 100, 1134, 566);
 		getContentPane().setLayout(null);
 		
 		JPanel panelBuscaBase = new JPanel();
 		panelBuscaBase.setBorder(new TitledBorder(null, "Buscar Base", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelBuscaBase.setBounds(31, 11, 712, 94);
+		panelBuscaBase.setBounds(31, 11, 513, 94);
 		getContentPane().add(panelBuscaBase);
 		panelBuscaBase.setLayout(null);
 		
 		textField = new JTextField();
 		textField.setToolTipText("Caminho do arquivo");
 		textField.setEnabled(false);
-		textField.setBounds(10, 31, 593, 20);
+		textField.setBounds(10, 31, 388, 20);
 		panelBuscaBase.add(textField);
 		textField.setColumns(10);
 		
 		btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(613, 30, 89, 23);
+		btnBuscar.setBounds(408, 30, 89, 23);
 		panelBuscaBase.add(btnBuscar);
 		
 		JLabel lblAjuda = new JLabel("Apenas arquivos com extens\u00E3o .txt");
 		lblAjuda.setBounds(10, 58, 210, 14);
 		panelBuscaBase.add(lblAjuda);
 		
-		panelDataset = new JPanel();
-		panelDataset.setBorder(new TitledBorder(null, "Classes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelDataset.setBounds(0, 0, 712, 194);
-		
-		criarLabelsClasse();
-		panelDataset.setLayout(null);
-		
-		lblQtdRegistos = new JLabel("Total de Instâncias: 0");
-        lblQtdRegistos.setBounds(30, 30, 200, 30);
-        panelDataset.add(lblQtdRegistos);
-		
-        
-        
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setLayout(null);
-		scrollPane.setBounds(31, 117, 712, 194);
-		getContentPane().add(scrollPane);
-		
-		scrollPane.add(panelDataset);
-		
-		JPanel panelDivisaoBase = new JPanel();
-		panelDivisaoBase.setBorder(new TitledBorder(null, "Divis\u00E3o da Base", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelDivisaoBase.setBounds(31, 322, 712, 71);
-		getContentPane().add(panelDivisaoBase);
-		panelDivisaoBase.setLayout(null);
-		
-		JLabel lblTxtDivisao = new JLabel("Parte de Treino:");
-		lblTxtDivisao.setBounds(10, 34, 94, 14);
-		panelDivisaoBase.add(lblTxtDivisao);
+//		criarLabelsClasse();
 		
 		MaskFormatter fmt = null;
 		try {
@@ -94,42 +62,60 @@ public class TelaPrincipal extends JFrame {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		 
-		textPorcentagem = new JFormattedTextField(fmt);
-		textPorcentagem.setBounds(118, 31, 205, 20);
-		panelDivisaoBase.add(textPorcentagem);
-		textPorcentagem.setColumns(10);
 		
-		btnIniciar = new JButton("Iniciar");
-		btnIniciar.setBounds(350, 30, 89, 23);
-		panelDivisaoBase.add(btnIniciar);
+		JPanel panelClasses = new JPanel();
+		panelClasses.setBorder(new TitledBorder(null, "Classes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelClasses.setBounds(30, 116, 514, 339);
+		getContentPane().add(panelClasses);
+		panelClasses.setLayout(null);
+		
+        
+        
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 21, 494, 283);
+		panelClasses.add(scrollPane);
+		scrollPane.setLayout(null);
 		
 		JPanel panelResultado = new JPanel();
 		panelResultado.setBorder(new TitledBorder(null, "Resultado", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelResultado.setBounds(31, 404, 712, 113);
+		panelResultado.setBounds(568, 310, 513, 145);
 		getContentPane().add(panelResultado);
 		panelResultado.setLayout(null);
 		
 		textAreaResultado = new JTextArea();
-		textAreaResultado.setBounds(10, 21, 692, 81);
+		textAreaResultado.setBounds(10, 21, 493, 101);
 		panelResultado.add(textAreaResultado);
+		
+		JPanel panelTeste = new JPanel();
+		panelTeste.setBorder(new TitledBorder(null, "Teste", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelTeste.setBounds(568, 23, 513, 263);
+		getContentPane().add(panelTeste);
+		panelTeste.setLayout(null);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 25, 493, 185);
+		panelTeste.add(scrollPane_1);
+		
+		JButton btnTestar = new JButton("Testar");
+		btnTestar.setBounds(10, 221, 89, 23);
+		panelTeste.add(btnTestar);
 		
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
-	
-	private void criarLabelsClasse() {
-		classes = new ArrayList<>();
-		for(int i = 0; i < 20; i++) {
-			JLabel lbl = new JLabel("");
-        	lbl.setBounds(30, (i*30)+60, 200, 30);
-        	lbl.setVisible(false);
-        	panelDataset.add(lbl);
-        	classes.add(lbl);
-		}
-		
-	}
+//	
+//	private void criarLabelsClasse() {
+//		classes = new ArrayList<>();
+//		for(int i = 0; i < 20; i++) {
+//			JLabel lbl = new JLabel("");
+//        	lbl.setBounds(30, (i*30)+60, 200, 30);
+//        	lbl.setVisible(false);
+//        	panelDataset.add(lbl);
+//        	classes.add(lbl);
+//		}
+//		
+//	}
 	
 	public void reiniciarPanelDataSet() {
 		for(int i = 0; i <classes.size(); i++) {
@@ -188,18 +174,18 @@ public class TelaPrincipal extends JFrame {
 		JOptionPane.showMessageDialog(this, mensagem, "", 1);
 	}
 	
-	public boolean validarCampoDivisaoBase() {
-		if(textPorcentagem.getText().length() > 0) {
-			try {
-				Integer.parseInt(textPorcentagem.getText());
-				return true;
-			}catch (Exception e) {
-				return false;
-			}
-		}else {
-			return false;
-		}
-	}
+//	public boolean validarCampoDivisaoBase() {
+//		if(textPorcentagem.getText().length() > 0) {
+//			try {
+//				Integer.parseInt(textPorcentagem.getText());
+//				return true;
+//			}catch (Exception e) {
+//				return false;
+//			}
+//		}else {
+//			return false;
+//		}
+//	}
 
 	public JButton getBtnBuscar() {
 		return btnBuscar;
@@ -221,26 +207,6 @@ public class TelaPrincipal extends JFrame {
 	}
 
 
-	public JPanel getPanelDataset() {
-		return panelDataset;
-	}
-
-
-	public void setPanelDataset(JPanel panelDataset) {
-		this.panelDataset = panelDataset;
-	}
-
-
-	public JLabel getLblQtdRegistos() {
-		return lblQtdRegistos;
-	}
-
-
-	public void setLblQtdRegistos(JLabel lblQtdRegistos) {
-		this.lblQtdRegistos = lblQtdRegistos;
-	}
-
-
 	public ArrayList<JLabel> getClasses() {
 		return classes;
 	}
@@ -248,26 +214,6 @@ public class TelaPrincipal extends JFrame {
 
 	public void setClasses(ArrayList<JLabel> classes) {
 		this.classes = classes;
-	}
-
-
-	public JFormattedTextField getTextPorcentagem() {
-		return textPorcentagem;
-	}
-
-
-	public void setTextPorcentagem(JFormattedTextField textPorcentagem) {
-		this.textPorcentagem = textPorcentagem;
-	}
-
-
-	public JButton getBtnIniciar() {
-		return btnIniciar;
-	}
-
-
-	public void setBtnIniciar(JButton btnIniciar) {
-		this.btnIniciar = btnIniciar;
 	}
 
 
@@ -279,6 +225,4 @@ public class TelaPrincipal extends JFrame {
 	public void setTextAreaResultado(JTextArea textAreaResultado) {
 		this.textAreaResultado = textAreaResultado;
 	}
-	
-	
 }

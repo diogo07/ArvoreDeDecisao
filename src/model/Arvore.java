@@ -1,10 +1,10 @@
 package model;
 
 public class Arvore {
-private Node raiz = null;
+private No raiz = null;
 	
 	public void construir(DataSet baseDados) {
-		raiz = new Node(baseDados);
+		raiz = new No(baseDados);
 		raiz.construir();
 	}
 	
@@ -12,12 +12,20 @@ private Node raiz = null;
 		if (raiz == null)
 			throw new RuntimeException("Árvore não foi construída.");
 		else {
-			Node no = raiz;
-			while (!no.isFolha()) {
-				String valor = instancia.getValor(no.getAtributo());
-				no = no.getProximoNode(valor);
+			No no = raiz;
+			
+			No anterior = null;
+			
+			try {
+				while (!no.isFolha()) {
+					String valor = instancia.getValor(no.getAtributo());
+					anterior = no;
+					no = no.getProximoNode(valor);
+				}
+				return no.getValor();
+			} catch (NullPointerException e) {
+				return no.getValor();
 			}
-			return no.getValor();
 		}
 	}
 

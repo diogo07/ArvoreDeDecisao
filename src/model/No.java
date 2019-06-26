@@ -3,19 +3,17 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class Node {
+public class No {
 
 	private String atributo;
 	private double ganho;
-	private DataSet subSet;
-	
+	private DataSet subSet;	
 	private boolean isFolha;
-	private String valor;	
-	
-	private Map<String,Node> descendentes;
+	private String valor;		
+	private Map<String,No> descendentes;
 	private int nivel;
 	
-	public Node(DataSet baseDados) {
+	public No(DataSet baseDados) {
 		this.atributo = "<não definido>";
 		this.ganho = 0;
 		this.subSet = baseDados;
@@ -38,9 +36,9 @@ public class Node {
 		return (isFolha || (descendentes == null));
 	}
 
-	private void addDescente(String valor, Node filho) {
+	private void addDescendente(String valor, No filho) {
 		if (descendentes == null)
-			descendentes = new LinkedHashMap<String,Node>();
+			descendentes = new LinkedHashMap<String,No>();
 		filho.nivel = this.nivel + 1;
 		descendentes.put(valor, filho);
 	}
@@ -64,14 +62,14 @@ public class Node {
 				}
 			}
 			for (String valor : subSet.getValoresDoAtributo(atributo))
-				addDescente(valor, new Node(subSet.getSubSet(atributo, valor)) );
-			for (Entry<String, Node> e : descendentes.entrySet()) {
+				addDescendente(valor, new No(subSet.getSubSet(atributo, valor)) );
+			for (Entry<String, No> e : descendentes.entrySet()) {
 				e.getValue().construir();
 			}
 		}
 	}
 
-	public Node getProximoNode(String valor) {
+	public No getProximoNode(String valor) {
 		if (isFolha)
 			throw new RuntimeException("Nodo folha, use getValor() para determinar a classificação.");		
 		return descendentes.get(valor);
@@ -84,7 +82,7 @@ public class Node {
 			msg += "-> " + valor;
 		else {
 			msg += "<<" + atributo + ">>";
-			for (Entry<String,Node> e : descendentes.entrySet()) {
+			for (Entry<String,No> e : descendentes.entrySet()) {
 				msg += "\n";
 				for (int i = 0; i < nivel; i++) msg += "\t\t";
 				msg += "\t+--" + e.getKey() + "--" + e.getValue();

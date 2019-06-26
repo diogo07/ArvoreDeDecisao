@@ -47,13 +47,15 @@ public class DataSet {
 	}
 	
 	public DataSet getSubSet(String atributo, String valor) {
-		if (registros.isEmpty())
+		if (registros.isEmpty()){
 			return null;
-		else {
+		}else {
 			List<Instancia> subConjunto = new ArrayList<Instancia>();
-			for (Instancia registro : registros)
-				if (registro.getValor(atributo).equals(valor))
+			for (Instancia registro : registros) {								
+				if (registro.getValor(atributo).equals(valor)) {
 					subConjunto.add(registro);
+				}
+			}
 			return new DataSet(subConjunto, atributoDeClasse);
 		}
 	}
