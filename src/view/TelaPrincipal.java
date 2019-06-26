@@ -4,6 +4,7 @@ package view;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.awt.GridLayout;
 import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -27,6 +28,10 @@ public class TelaPrincipal extends JFrame {
 	private JButton btnBuscar;
 	private ArrayList<JLabel> classes;
 	private JTextArea textAreaResultado;
+	private JPanel panelClasses;
+	private JPanel panelTeste;
+	private JPanel panelResultado;
+	private JButton btnTestar;
 	
 	public TelaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,7 +59,7 @@ public class TelaPrincipal extends JFrame {
 		lblAjuda.setBounds(10, 58, 210, 14);
 		panelBuscaBase.add(lblAjuda);
 		
-//		criarLabelsClasse();
+		
 		
 		MaskFormatter fmt = null;
 		try {
@@ -63,20 +68,19 @@ public class TelaPrincipal extends JFrame {
 			e.printStackTrace();
 		}
 		
-		JPanel panelClasses = new JPanel();
+		panelClasses = new JPanel();
 		panelClasses.setBorder(new TitledBorder(null, "Classes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelClasses.setBounds(30, 116, 514, 339);
-		getContentPane().add(panelClasses);
-		panelClasses.setLayout(null);
+		panelClasses.setBounds(0, 0, 514, 339);
+		panelClasses.setLayout(new GridLayout(0, 1, 10, 10));
 		
+		criarLabelsClasse();
         
-        
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 21, 494, 283);
-		panelClasses.add(scrollPane);
-		scrollPane.setLayout(null);
+		JScrollPane scrollPane = new JScrollPane(panelClasses);
+		scrollPane.setBounds(30, 116, 514, 339);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		getContentPane().add(scrollPane);
 		
-		JPanel panelResultado = new JPanel();
+		panelResultado = new JPanel();
 		panelResultado.setBorder(new TitledBorder(null, "Resultado", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelResultado.setBounds(568, 310, 513, 145);
 		getContentPane().add(panelResultado);
@@ -84,38 +88,40 @@ public class TelaPrincipal extends JFrame {
 		
 		textAreaResultado = new JTextArea();
 		textAreaResultado.setBounds(10, 21, 493, 101);
+		textAreaResultado.setEditable(false);
 		panelResultado.add(textAreaResultado);
 		
-		JPanel panelTeste = new JPanel();
+		panelTeste = new JPanel();
 		panelTeste.setBorder(new TitledBorder(null, "Teste", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelTeste.setBounds(568, 23, 513, 263);
-		getContentPane().add(panelTeste);
-		panelTeste.setLayout(null);
+		panelTeste.setBounds(0, 0, 513, 230);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 25, 493, 185);
-		panelTeste.add(scrollPane_1);
+		panelTeste.setLayout(new GridLayout(0, 1, 10, 10));
 		
-		JButton btnTestar = new JButton("Testar");
-		btnTestar.setBounds(10, 221, 89, 23);
-		panelTeste.add(btnTestar);
+		JScrollPane scrollPaneTeste = new JScrollPane(panelTeste);
+		scrollPaneTeste.setBounds(568, 23, 513, 230);
+		scrollPaneTeste.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		getContentPane().add(scrollPaneTeste);
+		
+		btnTestar = new JButton("Testar");
+		btnTestar.setBounds(780, 270, 89, 23);
+		getContentPane().add(btnTestar);
 		
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
-//	
-//	private void criarLabelsClasse() {
-//		classes = new ArrayList<>();
-//		for(int i = 0; i < 20; i++) {
-//			JLabel lbl = new JLabel("");
-//        	lbl.setBounds(30, (i*30)+60, 200, 30);
-//        	lbl.setVisible(false);
-//        	panelDataset.add(lbl);
-//        	classes.add(lbl);
-//		}
-//		
-//	}
+	
+	private void criarLabelsClasse() {
+		classes = new ArrayList<>();
+		for(int i = 0; i < 20; i++) {
+			JLabel lbl = new JLabel("");
+        	lbl.setBounds(30, (i*30)+60, 200, 30);
+        	lbl.setVisible(false);
+        	panelClasses.add(lbl);
+        	classes.add(lbl);
+		}
+		
+	}
 	
 	public void reiniciarPanelDataSet() {
 		for(int i = 0; i <classes.size(); i++) {
@@ -225,4 +231,46 @@ public class TelaPrincipal extends JFrame {
 	public void setTextAreaResultado(JTextArea textAreaResultado) {
 		this.textAreaResultado = textAreaResultado;
 	}
+
+
+	public JPanel getPanelClasses() {
+		return panelClasses;
+	}
+
+
+	public void setPanelClasses(JPanel panelClasses) {
+		this.panelClasses = panelClasses;
+	}
+
+
+	public JPanel getPanelTeste() {
+		return panelTeste;
+	}
+
+
+	public void setPanelTeste(JPanel panelTeste) {
+		this.panelTeste = panelTeste;
+	}
+
+
+	public JPanel getPanelResultado() {
+		return panelResultado;
+	}
+
+
+	public void setPanelResultado(JPanel panelResultado) {
+		this.panelResultado = panelResultado;
+	}
+
+
+	public JButton getBtnTestar() {
+		return btnTestar;
+	}
+
+
+	public void setBtnTestar(JButton btnTestar) {
+		this.btnTestar = btnTestar;
+	}
+	
+	
 }

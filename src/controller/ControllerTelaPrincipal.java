@@ -46,7 +46,7 @@ public class ControllerTelaPrincipal implements ActionListener{
 					return;
 				}
 	            
-	            System.out.println(dataSet);
+	           // System.out.println(dataSet);
 	            
 	            Collections.shuffle(dataSet.getRegistros());            
 //	            this.telaPrincipal.getLblQtdRegistos().setText("Total de Instâncias: "+dataSet.size());
