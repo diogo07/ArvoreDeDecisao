@@ -34,7 +34,9 @@ public class TelaPrincipal extends JFrame {
 	private JButton btnTestar;
 	
 	public TelaPrincipal() {
+		super("Árvore de Decisão");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 		setBounds(100, 100, 1134, 566);
 		getContentPane().setLayout(null);
 		
@@ -97,7 +99,7 @@ public class TelaPrincipal extends JFrame {
 		btnTestar.setBounds(780, 270, 89, 23);
 		getContentPane().add(btnTestar);
 		
-		criarLabelsAtributos();
+		criarArraysAtributos();
 		
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -115,34 +117,9 @@ public class TelaPrincipal extends JFrame {
 		
 	}
 	
-	private void criarLabelsAtributos() {
+	private void criarArraysAtributos() {
 		atributos = new ArrayList<>();
-		comboAtributos = new ArrayList<>();
-//		
-//		
-//		for(int i = 0; i < 10; i++) {
-//			
-//			JLabel lbl = new JLabel("");
-//			lbl.setVisible(false);
-//		    panelTeste.add(lbl);
-//		    atributos.add(lbl);
-//		    
-//		    JLabel lbl1 = new JLabel("");
-//		    lbl1.setVisible(false);
-//		    panelTeste.add(lbl1);
-//		    atributos.add(lbl1);
-//		    
-//		    JComboBox<String> combo = new JComboBox<>();
-//		    combo.setVisible(false);
-//		    panelTeste.add(combo);
-//		    comboAtributos.add(combo);
-//		    
-//		    JComboBox<String> combo1 = new JComboBox<>();
-//		    combo1.setVisible(false);
-//		    panelTeste.add(combo1);
-//		    comboAtributos.add(combo1);
-//		
-//		}		
+		comboAtributos = new ArrayList<>();	
 	}
 
 	
@@ -151,6 +128,12 @@ public class TelaPrincipal extends JFrame {
         	classes.get(i).setText("");
         	classes.get(i).setVisible(false);
         }
+	}
+	
+	public void reiniciarPanelTeste() {
+		comboAtributos = new ArrayList<>();
+		atributos = new ArrayList<>();		
+		panelTeste.removeAll();
 	}
 	
 	
@@ -235,19 +218,6 @@ public class TelaPrincipal extends JFrame {
 	public void exibirMensagemSucesso(String mensagem) {
 		JOptionPane.showMessageDialog(this, mensagem, "", 1);
 	}
-	
-//	public boolean validarCampoDivisaoBase() {
-//		if(textPorcentagem.getText().length() > 0) {
-//			try {
-//				Integer.parseInt(textPorcentagem.getText());
-//				return true;
-//			}catch (Exception e) {
-//				return false;
-//			}
-//		}else {
-//			return false;
-//		}
-//	}
 
 	public JButton getBtnBuscar() {
 		return btnBuscar;

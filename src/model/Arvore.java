@@ -14,12 +14,9 @@ private No raiz = null;
 		else {
 			No no = raiz;
 			
-			No anterior = null;
-			
 			try {
 				while (!no.isFolha()) {
 					String valor = instancia.getValor(no.getAtributo());
-					anterior = no;
 					no = no.getProximoNode(valor);
 				}
 				return no.getValor();

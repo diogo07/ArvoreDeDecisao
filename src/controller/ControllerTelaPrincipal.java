@@ -6,11 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import model.Acuracia;
 import model.Arvore;
 import model.Atributo;
 import model.DataSet;
-import model.DivisorBase;
 import model.Instancia;
 import model.ProcessadorArquivo;
 import view.TelaPrincipal;
@@ -49,13 +47,15 @@ public class ControllerTelaPrincipal implements ActionListener{
 				}
 	            	            
 	            Collections.shuffle(dataSet.getRegistros());            
-//	            this.telaPrincipal.getLblQtdRegistos().setText("Total de Instâncias: "+dataSet.size());
+	            
+	            this.telaPrincipal.reiniciarPanelTeste();
+	            this.telaPrincipal.getTextAreaResultado().setText("");
 	            
 	            ArrayList<String []> lista = dataSet.getQuantidadeInstanciasPorClasse();
 	            
 	            ArrayList<Atributo> atributos = dataSet.getAtributos();
 	            
-	            for(int i = 0; i < atributos.size(); i++) {
+	            for(int i = 0; i < atributos.size() - 1; i++) {
 	            	this.telaPrincipal.exibirAtributos(atributos.get(i).getNome());
 	            	this.telaPrincipal.exibirComboAtributos(atributos.get(i).getValores());
 	            	this.telaPrincipal.repaint();
@@ -73,18 +73,16 @@ public class ControllerTelaPrincipal implements ActionListener{
 		
 		if(e.getSource() == this.telaPrincipal.getBtnTestar()) {
 			if(dataSet != null) {
-				
-				//	Instancia e constroi a árvore
 				arvore = new Arvore();
 			    arvore.construir(dataSet);
 							    
 			    Instancia instanciaTeste = new Instancia();
 			    
-			    for(int i = 0; i < this.telaPrincipal.getAtributos().size() - 1; i++) {
+			    for(int i = 0; i < this.telaPrincipal.getAtributos().size(); i++) {
 			    	instanciaTeste.add(this.telaPrincipal.getAtributo(i), this.telaPrincipal.getValorSelecionadoComboBox(i));
 			    }
 			    
-			    this.telaPrincipal.getTextAreaResultado().setText(this.telaPrincipal.getAtributo(this.telaPrincipal.getAtributos().size() - 1)+": "+ arvore.predict(instanciaTeste));			    
+			    this.telaPrincipal.getTextAreaResultado().setText("Classificação: "+ arvore.predict(instanciaTeste));			    
 			    
 				
 			}else {
