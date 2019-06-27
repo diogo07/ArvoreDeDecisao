@@ -11,6 +11,7 @@ import model.Atributo;
 import model.DataSet;
 import model.Instancia;
 import model.ProcessadorArquivo;
+import view.TelaArvore;
 import view.TelaPrincipal;
 
 public class ControllerTelaPrincipal implements ActionListener{
@@ -23,6 +24,7 @@ public class ControllerTelaPrincipal implements ActionListener{
 		this.telaPrincipal = telaPrincipal;
 		this.telaPrincipal.getBtnBuscar().addActionListener(this);
 		this.telaPrincipal.getBtnTestar().addActionListener(this);
+		this.telaPrincipal.getBtnArvore().addActionListener(this);
 	}
 
 
@@ -89,6 +91,15 @@ public class ControllerTelaPrincipal implements ActionListener{
 				this.telaPrincipal.exibirMensagemErro("Nenhuma base foi selecionada!");
 			}
 		}
+		
+		if(e.getSource() == this.telaPrincipal.getBtnArvore()) {
+			if(dataSet != null) {
+				arvore = new Arvore();
+			    arvore.construir(dataSet);
+			    new TelaArvore(arvore);
+			}
+		}
+		
 	}
 
 }

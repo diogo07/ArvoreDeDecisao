@@ -32,6 +32,7 @@ public class TelaPrincipal extends JFrame {
 	private JPanel panelTeste;
 	private JPanel panelResultado;
 	private JButton btnTestar;
+	private JButton btnArvore;
 	
 	public TelaPrincipal() {
 		super("Árvore de Decisão");
@@ -63,15 +64,19 @@ public class TelaPrincipal extends JFrame {
 		
 		panelClasses = new JPanel();
 		panelClasses.setBorder(new TitledBorder(null, "Classes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelClasses.setBounds(0, 0, 514, 339);
+		panelClasses.setBounds(0, 0, 514, 300);
 		panelClasses.setLayout(new GridLayout(0, 1, 10, 10));
 		
 		criarLabelsClasse();
         
 		JScrollPane scrollPane = new JScrollPane(panelClasses);
-		scrollPane.setBounds(30, 116, 514, 339);
+		scrollPane.setBounds(30, 116, 514, 300);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		getContentPane().add(scrollPane);
+		
+		btnArvore = new JButton("Ver árvore");
+		btnArvore.setBounds(200, 450, 150, 23);
+		getContentPane().add(btnArvore);
 		
 		panelResultado = new JPanel();
 		panelResultado.setBorder(new TitledBorder(null, "Resultado", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -306,6 +311,16 @@ public class TelaPrincipal extends JFrame {
 
 	public void setAtributos(ArrayList<JLabel> atributos) {
 		this.atributos = atributos;
+	}
+
+
+	public JButton getBtnArvore() {
+		return btnArvore;
+	}
+
+
+	public void setBtnArvore(JButton btnArvore) {
+		this.btnArvore = btnArvore;
 	}
 	
 	
