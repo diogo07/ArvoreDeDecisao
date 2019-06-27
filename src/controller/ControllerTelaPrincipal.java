@@ -78,7 +78,21 @@ public class ControllerTelaPrincipal implements ActionListener{
 		if(e.getSource() == this.telaPrincipal.getBtnTestar()) {
 			if(dataSet != null) {
 				arvore = new Arvore();
-			    arvore.construir(dataSet);
+				
+				
+				try {
+					arvore.construir(dataSet);
+					Instancia instanciaTeste = new Instancia();
+				    
+				    for(int i = 0; i < this.telaPrincipal.getAtributos().size(); i++) {
+				    	instanciaTeste.add(this.telaPrincipal.getAtributo(i), this.telaPrincipal.getValorSelecionadoComboBox(i));
+				    }
+				    
+				    this.telaPrincipal.getTextAreaResultado().setText("Classificação: "+ arvore.predict(instanciaTeste));
+				} catch (Exception e2) {
+					this.telaPrincipal.exibirMensagemErro("Arquivo incompatível!");
+				}
+			    
 			    
 			    
 			    
@@ -90,13 +104,7 @@ public class ControllerTelaPrincipal implements ActionListener{
 //			    System.out.println("Erros: "+acuracia[1]);
 //			    System.out.println("Acurácia: "+acuracia[2]);
 			    
-			    Instancia instanciaTeste = new Instancia();
-			    
-			    for(int i = 0; i < this.telaPrincipal.getAtributos().size(); i++) {
-			    	instanciaTeste.add(this.telaPrincipal.getAtributo(i), this.telaPrincipal.getValorSelecionadoComboBox(i));
-			    }
-			    
-			    this.telaPrincipal.getTextAreaResultado().setText("Classificação: "+ arvore.predict(instanciaTeste));			    
+			    			    
 			    
 				
 			}else {
@@ -106,9 +114,14 @@ public class ControllerTelaPrincipal implements ActionListener{
 		
 		if(e.getSource() == this.telaPrincipal.getBtnArvore()) {
 			if(dataSet != null) {
-				arvore = new Arvore();
-			    arvore.construir(dataSet);
-			    new TelaArvore(arvore);
+				try {
+					arvore = new Arvore();
+				    arvore.construir(dataSet);
+				    new TelaArvore(arvore);
+				} catch (Exception e2) {
+					this.telaPrincipal.exibirMensagemErro("Arquivo incompatível!");
+				}
+				
 			}
 		}
 		
