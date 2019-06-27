@@ -39,6 +39,7 @@ public class TelaArvore extends JFrame {
 		
 		textArea.setText(arvore.toString());
 		
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 }
