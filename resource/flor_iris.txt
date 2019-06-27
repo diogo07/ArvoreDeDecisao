@@ -1,0 +1,24 @@
+SEPAL LENGTH,SEPAL WIDTH,PETAL LENGTH,PETAL WIDTH,ESPÉCIE
+Longa,Média,Longa,Larga,IRIS-VIRGINICA
+Média,Média,Longa,Larga,IRIS-VIRGINICA
+Curta,Média,Curta,Fina,IRIS-SETOSA
+Longa,Média,Longa,Larga,IRIS-VIRGINICA
+Curta,Média,Curta,Fina,IRIS-SETOSA
+Curta,Média,Curta,Fina,IRIS-SETOSA
+Média,Média,Longa,Média,IRIS-VERSICOLOR
+Longa,Larga,Longa,Média,IRIS-VERSICOLOR
+Média,Larga,Curta,Média,IRIS-VERSICOLOR
+Média,Fina,Curta,Média,IRIS-VERSICOLOR
+Curta,Larga,Curta,Fina,IRIS-SETOSA
+Média,Larga,Longa,Média,IRIS-VERSICOLOR
+Média,Larga,Longa,Larga,IRIS-VIRGINICA
+Curta,Fina,Curta,Fina,IRIS-VERSICOLOR
+Média,Larga,Curta,Fina,IRIS-SETOSA
+Curta,Larga,Curta,Fina,IRIS-SETOSA
+Curta,Fina,Curta,Média,IRIS-VIRGINICA
+Média,Fina,Longa,Média,IRIS-VIRGINICA
+Média,Larga,Curta,Fina,IRIS-SETOSA
+Média,Larga,Curta,Fina,IRIS-SETOSA
+Média,Fina,Curta,Média,IRIS-VERSICOLOR
+Longa,Larga,Longa,Larga,IRIS-VIRGINICA
+Média,Fina,Longa,Média,IRIS-VIRGINICA

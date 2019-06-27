@@ -8,10 +8,10 @@ import model.Arvore;
 
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
-import java.awt.Window.Type;
 
 public class TelaArvore extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextArea textArea;
 
@@ -31,7 +31,6 @@ public class TelaArvore extends JFrame {
 		textArea = new JTextArea();
 		textArea.setBounds(10, 11, 470, 301);
 		textArea.setEditable(false);
-		//contentPane.add(textArea);
 		
 		JScrollPane scrollPane = new JScrollPane(textArea);
 		scrollPane.setBounds(10, 11, 470, 301);

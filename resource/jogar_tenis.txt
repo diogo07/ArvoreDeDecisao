@@ -1,0 +1,15 @@
+Aspecto,Temperatura,Umidade,Vento,Jogar Tênis
+Sol,Quente,Elevada,Fraco,Não
+Sol,Quente,Elevada,Forte,Não
+Nuvens,Quente,Elevada,Fraco,Sim
+Chuva,Ameno,Elevada,Fraco,Sim
+Chuva,Fresco,Normal,Fraco,Sim
+Chuva,Fresco,Normal,Forte,Não
+Nuvens,Fresco,Normal,Forte,Sim
+Sol,Ameno,Elevada,Fraco,Não
+Sol,Fresco,Normal,Fraco,Sim
+Chuva,Ameno,Normal,Fraco,Sim
+Sol,Ameno,Normal,Forte,Sim
+Nuvens,Ameno,Elevada,Forte,Sim
+Nuvens,Quente,Normal,Fraco,Sim
+Chuva,Ameno,Elevada,Forte,Não
