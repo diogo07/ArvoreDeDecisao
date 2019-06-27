@@ -43,9 +43,8 @@ public class ControllerTelaPrincipal implements ActionListener{
 	            
 	            try {
 					dataSet = processadorArquivo.getRegistros();
-					this.telaPrincipal.getTextField().setText(caminho);
-		            
-				} catch (IOException except) {
+					this.telaPrincipal.getTextField().setText(caminho);		            
+				} catch (Exception except) {
 					this.telaPrincipal.exibirMensagemErro("Arquivo incompatível!");
 					return;
 				}
