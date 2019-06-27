@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import model.Acuracia;
 import model.Arvore;
 import model.Atributo;
 import model.DataSet;
+import model.DivisorBase;
 import model.Instancia;
 import model.ProcessadorArquivo;
 import view.TelaArvore;
@@ -77,7 +79,17 @@ public class ControllerTelaPrincipal implements ActionListener{
 			if(dataSet != null) {
 				arvore = new Arvore();
 			    arvore.construir(dataSet);
-							    
+			    
+			    
+			    
+//			    DivisorBase divisorBase = new DivisorBase(dataSet, 70);
+//			    double acuracia [] = Acuracia.calcular(divisorBase.baseTeste(), arvore);
+//				
+//			    System.out.println("\n\nCálculo\n");
+//			    System.out.println("Acertos: "+acuracia[0]);
+//			    System.out.println("Erros: "+acuracia[1]);
+//			    System.out.println("Acurácia: "+acuracia[2]);
+			    
 			    Instancia instanciaTeste = new Instancia();
 			    
 			    for(int i = 0; i < this.telaPrincipal.getAtributos().size(); i++) {
